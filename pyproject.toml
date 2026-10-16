@@ -1,0 +1,12 @@
+[project]
+name = "llm-finetuning-tutorial"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "datasets>=2.19",
+    "accelerate>=0.30",
+    "huggingface-hub>=0.23",
+    "trl>=0.8",
+]
