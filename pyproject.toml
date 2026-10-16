@@ -9,4 +9,5 @@ dependencies = [
     "accelerate>=0.30",
     "huggingface-hub>=0.23",
     "trl>=0.8",
+    "python-dotenv"
 ]

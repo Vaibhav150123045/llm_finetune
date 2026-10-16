@@ -1,13 +1,16 @@
 """Core training logic using HuggingFace SFTTrainer."""
 
+import os
 import torch
 from transformers import AutoModelForCausalLM
 from trl import SFTConfig, SFTTrainer
 
 from src.data import load_tokenizer, get_dataset
 
+HF_TOKEN = os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_TOKEN")
+
 # ── Hyperparameters ──────────────────────────────────────────────────────────
-MODEL_NAME = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+MODEL_NAME = "swiss-ai/Apertus-v1.5-8B"
 DATASET_NAME = "yahma/alpaca-cleaned"
 MAX_SEQ_LENGTH = 512
 DEFAULT_BATCH_SIZE = 2   # per device (conservative default for DDP)
@@ -22,7 +25,7 @@ OUTPUT_DIR = "output"
 
 def train(batch_size=DEFAULT_BATCH_SIZE, save_model=False):
     tokenizer = load_tokenizer(MODEL_NAME)
-    model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, dtype=torch.float32)
+    model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, dtype=torch.float32, token=HF_TOKEN)
 
     dataset = get_dataset(DATASET_NAME, tokenizer, MAX_SEQ_LENGTH, NUM_SAMPLES)
 
